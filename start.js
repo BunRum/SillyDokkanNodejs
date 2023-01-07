@@ -10,7 +10,7 @@ const chalk = require("chalk");
 const boxen = require("boxen");
 var ipaddress = ip.address()
 var miscfunctions = require("./uifunctions")
-const PORT = 8081
+const PORT = 443
 // console.log(Server.ServerStart/)
 var fulladdress = `https://${ipaddress}:${PORT}`
 var filehost = `https://${ipaddress}:8082`
@@ -85,6 +85,7 @@ async function start() {
 
     const sslServer = https.createServer(creds, app)
     sslServer.listen(PORT)
+    // app.listen(8081)
 
     // console.log(`Web server started at: ${fulladdress}`);
 

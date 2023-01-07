@@ -121,7 +121,7 @@ var ServerStart = function ServerStart(app) {
         res.send(
             {
                 "ping_info": {
-                    "host": "bunrumz.com",
+                    "host": Index.ipaddress,
                     "port": 443,
                     "port_str": 443,
                     "cf_uri_prefix": "https://cf.ishin-global.com/"
