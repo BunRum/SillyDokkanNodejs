@@ -1,0 +1,436 @@
+{
+    "gashas": [
+        {
+            "id": 7010,
+            "type": "Gasha::TicketGasha",
+            "name": "Hercule's Fortune Summon",
+            "description": "{center:begin}Perform Summons with {color : #FFFF00}Hercule's Fortune Summon Tickets{color}\nto get {color : #FF9900}Hercule Statues{color}!{center}",
+            "timer_layout_type": 0,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": null,
+            "gasha_category_id": 3,
+            "open_at": 1503619200,
+            "end_at": 2145916800,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_07010.png?Expires=1672117134&Signature=c5xE8xlTkkdDEbLl1e9yoNn5IrTD5uytSR9-MjOLyWvK5i7UBxIVA6zdQSQrCPXRXawdUUq9AAIp~TWPNUAK71mXg-xVRO2FFYyiEPsyllrhH9dhmG~X7ykX4I4jxiFFl2-gn39qkQoSdlsM9GGeNlCXlmOm5dN3AAEFPX~zE1gCHZ69idTB2PQsBezPu2bWvBDd9NcdfCq-oorOIuQStb42qWvO9DcKeqkW2aUQ5H4QZ0Lts84Aa4vGDZ8pFybkFuJjfbJVm-xyE0p9T8F5rupUC2BlqIbhOcLVwpCdbuHlGNViTCZ1T0MUbq47mb5KCbs-pHmEWXT7PRpYAKn0MQ__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color: #FFFF00}Hercule's Fortune Summon{color}",
+                    "description": "Use {color : #FFFF00}1 Hercule's Fortune Summon Ticket{color}\nto perform {color : #FF9900}a Single Summon{color}!",
+                    "currency_id": 701,
+                    "price": 1,
+                    "items_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{color: #FFFF00}Hercule's Fortune Summon{color}",
+                    "description": "Use {color : #FFFF00 }5 Hercule\u2019s Fortune Summon Tickets{color} to perform {color : #FF9900 }a Multi-Summon{color}!\nGet {color : #FF9900 }5 Hercule Statues per Multi-Summon{color}!",
+                    "currency_id": 701,
+                    "price": 5,
+                    "items_count": 5,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 8396,
+            "type": "Gasha::TicketGasha",
+            "name": "Power UP! SSR Force Summon",
+            "description": "{center:begin}Power UP! SSR Force Summon is on!\nUse \"{color: #FFFF00}SSR Force Summon Tickets 2{color}\" to perform summons!{center}",
+            "timer_layout_type": 0,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": null,
+            "gasha_category_id": 3,
+            "open_at": 1594080000,
+            "end_at": 2145916800,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_08396.png?Expires=1672117134&Signature=mTd5WXMoRbe0gMN4OpmWM07RAtGlHJzyQnFm1QBMx3it0VeX4vJo5RoW4dmcuP6eXX-3evNzrCUIx2QcQ21FISReg8rvVtMyIJNIe8IMsaBfTbZVv0ou8GMlSSX31OU2p8Y25Kfsy1a04FvJnjHLfE5xqAakZb16rKn4bRkC1UEsGqDImibyj~zWurIRFAbMpmTshePeks4QmUvXfpUtBQaRsMSIKBrCj3wsYQOfdXSP9Luf4CVA~mluiLcVUJoy~Bhv~KUOptDwp2udI~GJYuKfHuMoXLZmjV4DZlMqvnWMMxpRszxqpGvonMZxc~eQ~a4zrUXyTKlZ7lKJbOYzfw__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color: #FFFF00}Power UP! SSR Force Summon{color}",
+                    "description": "Guaranteed to get an SSR character.",
+                    "currency_id": 9016,
+                    "price": 1,
+                    "items_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{color: #FFFF00}Power UP! SSR Force Summon{color}",
+                    "description": "Guaranteed to get an SSR character.",
+                    "currency_id": 9016,
+                    "price": 1,
+                    "items_count": 1,
+                    "drawable_count": 0
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 454,
+            "type": "Gasha::PointGasha",
+            "name": "Friend Summon",
+            "description": "{center:begin}{color: #FFCC00}Great Saiyaman 1 & 2{color} that can be awakened into an {color : #FF0000}LR{color} is here!\nOne {color : #FFFF00}Z-Awakened character{color} or {color : #FFFF00}Hercule Statue{color} guaranteed per Multi-Summon!{center}",
+            "timer_layout_type": 0,
+            "is_rate_visible": false,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": null,
+            "gasha_category_id": 4,
+            "open_at": 1660545000,
+            "end_at": 2145916800,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_00454.png?Expires=1672117134&Signature=GLyFvEE0BsBGgZH67gHgQh5HaM4ihyhpSMwMbjZ6MzyMThd85cTk5jdekor-k~Dn6Y1qCtGU5brtO1-YgfoCb1uXk406or7xRKDXF3KRdQ3EvOpxoDMyrkDEtJJf4r1WXnoDH9QlYECW7r57JGI88UJ~yxz~fhWD7qUNIkvFj65YrjmeizmxrUHYzYGbclIHXTLDN005mC39DX9MVMskXd0OwQGlIWpcWHLux6aAKLsc0I0wu3Rf0gWeWFCoFdnUBus-dcDQrvBuyPiULXKysCmsGF8hCDR7PK~xOueHMpqu8x2G44vsc4idJ6SKVyMeEKDGfjWoES63WA6tnNowgw__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color: #FFFF00}Friend Summon{color}",
+                    "description": "Use Friend Points to obtain a character!",
+                    "currency_id": null,
+                    "price": 200,
+                    "items_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{color: #FFFF00}Friend Summon{color}",
+                    "description": "One {color : #FFFF00}Hercule Statue{color} or {color : #FFFF00}Z-Awakened character{color} guaranteed!\nGet 10 characters with this Summon.",
+                    "currency_id": null,
+                    "price": 2000,
+                    "items_count": 10,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9650,
+            "type": "Gasha::StoneGasha",
+            "name": "\"Mysterious Ritual\" Summon",
+            "description": "{center:begin}{color : #FFFF00}4 times only!{color} \"Mysterious Ritual\" Summon!\nUse {color : #FFFF00}25 Dragon Stones{color} to recruit {color : #FFFF00}5 Elder Kai{color}!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300341,
+            "gasha_category_id": 2,
+            "open_at": 1670826600,
+            "end_at": 1672208999,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_07878.png?Expires=1672117134&Signature=WjQqhK9294VFnnMuRdRzzj6mHdP-6sPrsb4By1uiZjoPKSedihjRFTT4qsorIgcHfXGXCKi6EURoVGpiPMBeeswwfJrIyNcRwY05wX9UmdonuxCHsnw1RbCxdfstqqqheNO4KBMpyAC40NrlOmp1RsV9XlK405NAsuQspsC79gAEgBPY0ukNbtkV07XoOw3C4GKCqw1QUsIKzvuz-t22aMm6q~zmB85Yqp21J8Ucx8M42n2lvxW56ur-tjAz7OXxgGkA58oUYV-Rpbi5n5ftJAb0wRW1qAtpdWD8hpbRVsiBmy4xKdFIo3fddhHNgNaUxtaIgXUdmJ9NixGd3Ai7-g__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "treasure_item_id": 7002,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color : #FFFF00}\"Mysterious Ritual\" Summon{color}",
+                    "description": "{color : #FFFF00}4 times only!{color} \"Mysterious Ritual\" Summon!\nPerform a Multi-Summon to recruit {color : #FFFF00}5 Elder Kai{color}!\n* The available character in this Summon Event is {color : #FFFF00}Elder Kai{color} only.",
+                    "currency_id": null,
+                    "price": 5,
+                    "items_count": 1,
+                    "treasure_item_count": null,
+                    "drawable_count": 0
+                },
+                {
+                    "no": 2,
+                    "title": "{color : #FFFF00}\"Mysterious Ritual\" Summon{color}",
+                    "description": "{color : #FFFF00}4 times only!{color} \"Mysterious Ritual\" Summon!\nPerform a Multi-Summon to recruit {color : #FFFF00}5 Elder Kai{color}!\n* The available character in this Summon Event is {color : #FFFF00}Elder Kai{color} only.",
+                    "currency_id": null,
+                    "price": 25,
+                    "items_count": 5,
+                    "treasure_item_count": 5,
+                    "drawable_count": 4
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9646,
+            "type": "Gasha::StoneGasha",
+            "name": "Burst Summon",
+            "description": "{center: begin}The {color:#FFCC00}featured characters{color} can {color:#FF3333}play an active role in Burst Mode{color}!\nRecruit {color:#FFFF00}powerful SSR characters{color} to your team!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300473,
+            "gasha_category_id": 2,
+            "open_at": 1670803200,
+            "end_at": 1672358399,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_09646.png?Expires=1672117134&Signature=TSr1gZM9z3JfvAnsxmGb6Bs3V2EgQzwJT-xKORcB6tGsYbOPNKJfJ2tj5RSPigOBHHgRinTqqhVuZmlu3Tv9puYPpQIlemG7BSw26ISufjiOGSHYEy0xo24Qjx9SBKgmxZquP1drrNty8c734i1YIf2fKalwrMkEu-UfskylJthSuvWQ-J6-x-RLq9NNVshYXrQesMDtY7oMCMHvhbuJXh8~KDI05BppJd0IfAVIunLXFVa6nEMDIXoBSbl6xlfx-ME4ui6mkREHVJGLGWnAPJZKfOzFLlRY4MquCxOPMkTe1gqYCtSG~7nu4lEM8XG2fxH1FZzq5syQoy-RXHGOfA__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "treasure_item_id": 7002,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color: #FF0000}Burst Summon{color}",
+                    "description": "Recruit a Rare or higher character with this Summon.",
+                    "currency_id": null,
+                    "price": 5,
+                    "items_count": 1,
+                    "treasure_item_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{color: #FF0000}Burst Summon{color}",
+                    "description": "{color: #FF3333}3 times only! 30 Dragon Stones for a Multi-Summon!{color}\n{color: #CC66FF}One featured SSR character{color} guaranteed!\nRecruit 10 Rare or higher characters with this Summon.",
+                    "currency_id": null,
+                    "price": 30,
+                    "items_count": 10,
+                    "treasure_item_count": 6,
+                    "drawable_count": 2
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9654,
+            "type": "Gasha::StoneGasha",
+            "name": "Extreme Z Legendary Summon",
+            "description": "{center: begin}{color : #FF9900}Extreme Z{color} {color : #FFFF00}Legendary Summon{color} is on!\nRecruit {color:#00CC00}Goku Black{color} who will acquire great power after awakening!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300471,
+            "gasha_category_id": 1,
+            "open_at": 1671604200,
+            "end_at": 1672811999,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_09654.png?Expires=1672117134&Signature=HyRlHZy~BgYa3GwPifUmtsm6KDKmL0Tv0PVKnVviF2DAhObV6qTAvqMw~41eTZK50AKXA4ozjZEMMiwomSk5GuZwOnpbHBNQZQE6ZE6mFB1ziM5r7gNQiEOcHAAEopJsQnofwU0yYS7~N0Nib2Gp8ILpXR-lt2PdWMhQUE1nE0u~JCkG~l17ti5907jqji9d0vwg2mpql2LOwIMFFSv6JC9gCTEQLmVrsugcfvwZAZYeqQMgQBbjlR34oqWrxpHTHhRxC4DwBQ7evfSIwCeJaimZw8JP1tyKX3krvRGxvuSiJNA8wgQRHOY1EKpcmBMVWqo0jrYUUB7HsF9oBNM5Kw__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "treasure_item_id": 7001,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{center: begin}{color : #FF9900}Extreme Z{color} {color : #FFFF00}Legendary Summon{color}",
+                    "description": "Recruit a Rare or higher character with this Summon.",
+                    "currency_id": null,
+                    "price": 5,
+                    "items_count": 1,
+                    "treasure_item_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{center: begin}{color : #FF9900}Extreme Z{color} {color : #FFFF00}Legendary Summon{color}",
+                    "description": "{color : #FFFF00}One SSR character guaranteed!{color}\nRecruit 10 Rare or higher characters with this Summon.",
+                    "currency_id": null,
+                    "price": 50,
+                    "items_count": 10,
+                    "treasure_item_count": 10,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9636,
+            "type": "Gasha::TicketGasha",
+            "name": "Starry Winter Night Dokkan Festival [Tons of Thanks Ticket]",
+            "description": "{center:begin}{color : #FFCC00}Starry{color} {color : #B3EAFA}Winter Night{color} {color : #FF3300}D{color}{color : #FF9900}o{color}{color: #FFCC00}k{color}{color : #CCFF00}k{color}{color : #33FF00}a{color}{color: #4B76F2}n{color} {color : #E38EFF}Festival{color} is now on!\nCome summon {color : #FF9900}powerful characters{color}!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300466,
+            "gasha_category_id": 3,
+            "open_at": 1670221800,
+            "end_at": 1672984799,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_09636.png?Expires=1672117134&Signature=gRTlwbzxFTtX4XzA6-pqExp9ZHr4I1QgZ5ve-xmtGonmDyrfma72u6dVCdyfQd4L6FoMeCNM6RWpa4PVCPvW69QisQH9qlRmhhh4k6QAFOJahf3l4zhOIA28h2qAM85DHvtHxrT8vcEdKvwbJiL-CZAwZabLc0AS98FoKXzA3rnBLUq4Uw9WFWc-QE~~kgg6Dw9KwkjT0zzUSEQZjMWD~NdViyyxRU5prICPfeg-mvcglLZW29B-2aFRvChMgDY4khANOJyGfeo0veAa~2J90AokkmqLKh0gmPbk5z5uy1EjzbjqJNtCmk4cr9UXWdnwO12Tp4jyRJ5HhGJauLVS4Q__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color : #FFCC00}Starry{color} {color : #B3EAFA}Winter Night{color} {color : #FF3300}D{color}{color : #FF9900}o{color}{color: #FFCC00}k{color}{color : #CCFF00}k{color}{color : #33FF00}a{color}{color: #4B76F2}n{color} {color : #E38EFF}Festival{color}",
+                    "description": "Use a {color : #FFFF00}Starry Winter Night Tons of Thanks Ticket{color}\nto recruit a Rare or higher character with this Summon.",
+                    "currency_id": 113,
+                    "price": 1,
+                    "items_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{color : #FFCC00}Starry{color} {color : #B3EAFA}Winter Night{color} {color : #FF3300}D{color}{color : #FF9900}o{color}{color: #FFCC00}k{color}{color : #CCFF00}k{color}{color : #33FF00}a{color}{color: #4B76F2}n{color} {color : #E38EFF}Festival{color}",
+                    "description": "Use 7 {color : #FFFF00}Starry Winter Night Tons of Thanks Tickets{color}\nto recruit 7 Rare or higher characters with this Summon.",
+                    "currency_id": 113,
+                    "price": 7,
+                    "items_count": 7,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9652,
+            "type": "Gasha::StoneGasha",
+            "name": "Extreme Z Legendary Summon",
+            "description": "{center: begin}{color : #FF9900}Extreme Z{color} {color : #FFFF00}Legendary Summon{color} is on! Recruit {color:#FF3333}Trunks (Teen) (Future){color}\nwho will acquire great power after awakening!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300470,
+            "gasha_category_id": 1,
+            "open_at": 1671604200,
+            "end_at": 1672811999,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_09652.png?Expires=1672117134&Signature=QMO0nYY677ijX0AF6DvlAw~wcIKpGb3TQIAC1FtlD11mzuyOxqucDNQkdkFScwGxt3HCKh~1PSSNTp21jfnquqFgj3Uwo~3i-fD-HD~6MQ~IZYiygM0eVCxq9N2v6yJncnkPxI3v08T0A0OrNmcn0bQcimaWaqcM1LvnN5tsjQif7yCyLDhjvpGH0gqOMPwqy2m5VLKho1tLluVGc4Ep5oJEhBHUfuz88tlb2QDeYcdw2kKE-hEZBTmE-uOFdxFI2S4WT9CthZiUfAms1jBXMjtSvQE6IQpMV6MfBlNxp-MjBzHGd6FReDRjglHbFWDFjJpdra9MHTigxsDlkdkz~g__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": null,
+            "mypage_banner_url": null,
+            "treasure_item_id": 7001,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{center: begin}{color : #FF9900}Extreme Z{color} {color : #FFFF00}Legendary Summon{color}",
+                    "description": "Recruit a Rare or higher character with this Summon.",
+                    "currency_id": null,
+                    "price": 5,
+                    "items_count": 1,
+                    "treasure_item_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{center: begin}{color : #FF9900}Extreme Z{color} {color : #FFFF00}Legendary Summon{color}",
+                    "description": "{color : #FFFF00}One SSR character guaranteed!{color}\nRecruit 10 Rare or higher characters with this Summon.",
+                    "currency_id": null,
+                    "price": 50,
+                    "items_count": 10,
+                    "treasure_item_count": 10,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9642,
+            "type": "Gasha::StoneGasha",
+            "name": "Divine Dragon Carnival",
+            "description": "{center: begin}{color : #FF9900}SSR Summon Rate DOUBLED!{color} New SSR {color:#CC66FF}Fusion Zamasu{color} can\nlaunch an {color: #FFCC00}Active Skill{color} {color: #FF3399}after being Dokkan Awakened into an LR{color}!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300469,
+            "gasha_category_id": 1,
+            "open_at": 1670826600,
+            "end_at": 1672552799,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_09642.png?Expires=1672117134&Signature=kqfcrDykpLPxeonMZeLYvdlrCrEop6re3qGfO-T32WksNzMw4WAgyjWbgo8Ggf-1PHbRxly-iT0JSo47CdX5r429qvRyGUTNKPWCzw4wEL~lp-9Jpm8IIGd6M3lCdgKiAj0wOK20khpnIAnwCXFcQBzOPS1AZwjzuBQ132FtrG~Ld05wR5fHzfuzpvtOXcfgaklOgmOBqhrpwWuApdjX5i1t4Q-d0m~PrMaQmDX6rpogD4riELRaoop8~Mww3fp5lYjs0j5xdBtOORGVj9ikE2auorah~jOOln6YdzhwPscT2ojat1An3eKqbXwjCCFDTB8SLdhfyQgidbcJgkdWVA__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": "packaged_movies/DKB_FusionZamasu_20221212.cpk",
+            "mypage_banner_url": null,
+            "treasure_item_id": 7003,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color : #FF0000}Divine{color} {color : #00DB00}Dragon{color} {color : #BB5E00}Carnival{color}",
+                    "description": "Recruit an SR or higher character with this Summon.",
+                    "currency_id": null,
+                    "price": 5,
+                    "items_count": 1,
+                    "treasure_item_count": 1,
+                    "drawable_count": null
+                },
+                {
+                    "no": 2,
+                    "title": "{color : #FF0000}Divine{color} {color : #00DB00}Dragon{color} {color : #BB5E00}Carnival{color}",
+                    "description": "Perform a Multi-Summon to recruit\nan extra {color:#CC66FF}Elder Kai{color}!\nRecruit 10 SR or higher characters with this Summon.",
+                    "currency_id": null,
+                    "price": 50,
+                    "items_count": 10,
+                    "treasure_item_count": 10,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        },
+        {
+            "id": 9644,
+            "type": "Gasha::TicketGasha",
+            "name": "Divine Dragon Carnival [Ticket]",
+            "description": "{center: begin}Use {color : #FF9900}Divine Dragon Carnival Tickets{color} to summon powerful characters!\n{color : #FFFF00}One SSR character{color} guaranteed per Multi-Summon!{center}",
+            "timer_layout_type": 1,
+            "is_rate_visible": true,
+            "notification_announcement_master_id": null,
+            "information_announcement_master_id": 300469,
+            "gasha_category_id": 3,
+            "open_at": 1670826600,
+            "end_at": 1672552799,
+            "current_step": 1,
+            "banner_url": "https://cf.ishin-global.aktsk.com/banners/en/gashasocool/gasha_top_banner_09644.png?Expires=1672117134&Signature=DKFTl7v~i-Zao-8SMiGnF-lKzgr9gBjCnLT0KPs7X70XgwcrJghbaq2kvkEjtkIdxCjrVDi7siftM1iZ4KL5YC~IqX1iwDUBa5AitXcuITBIRPyPMpYYzntfUByoM1VhfO0uHuJsMKIMPKNBlyZKJHEbPDkbE6ql-AAQbw79vUIev9zI2O5EK5OqmItbjzoJUjRI08BhiUA804ZiqMxdflZKsItxjT8~Al2PBK0UWlHlg8XUPQFIQErtVkJ5tpEF-BfARkY5dvdZ9gQ1V8PVLIlQ8D7~8NLyNWpisHWjy7HfYNMDdvRIOk5QHqgRqrAltboryGsUpCilJYEn-Ffysg__&Key-Pair-Id=APKAI5CNWVPOYRVLGC6Q",
+            "banner_lwf_path": null,
+            "usm_file_path": "packaged_movies/DKB_FusionZamasu_20221212.cpk",
+            "mypage_banner_url": null,
+            "courses": [
+                {
+                    "no": 1,
+                    "title": "{color : #FF0000}Divine{color} {color : #00DB00}Dragon{color} {color : #BB5E00}Carnival{color}",
+                    "description": "Recruit an SR or higher character with this Summon.",
+                    "currency_id": 9068,
+                    "price": 1,
+                    "items_count": 1,
+                    "drawable_count": 0
+                },
+                {
+                    "no": 2,
+                    "title": "{color : #FF0000}Divine{color} {color : #00DB00}Dragon{color} {color : #BB5E00}Carnival{color}",
+                    "description": "Perform a Multi-Summon to recruit\nan extra {color:#CC66FF}Elder Kai{color}!\nRecruit 5 SR or higher characters with this Summon.",
+                    "currency_id": 9068,
+                    "price": 5,
+                    "items_count": 5,
+                    "drawable_count": null
+                }
+            ],
+            "is_new": false
+        }
+    ],
+    "processed_at": 1672113534,
+    "gasha_categories": [
+        {
+            "id": 1,
+            "name": "Recommended",
+            "priority": 4000,
+            "is_default": true
+        },
+        {
+            "id": 2,
+            "name": "Dragon Stone",
+            "priority": 3000,
+            "is_default": false
+        },
+        {
+            "id": 3,
+            "name": "Ticket",
+            "priority": 2000,
+            "is_default": false
+        },
+        {
+            "id": 4,
+            "name": "Friend Pts.",
+            "priority": 1000,
+            "is_default": false
+        }
+    ]
+}
