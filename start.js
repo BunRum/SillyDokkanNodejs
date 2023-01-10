@@ -17,21 +17,22 @@ var fulladdress = `https://${ipaddress}:${PORT}`
 var filehost = `https://${ipaddress}:8082`
 const cliProgress = require('cli-progress');
 
-const rootDir = (process.pkg) ? process.cwd() : __dirname;
-console.log(path.join(rootDir, "bin", "mkcert.exe"))
-
-if (!fs.existsSync(path.join(process.env.LOCALAPPDATA, "mkcert", "rootCA.pem"))) {
-    childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["-install"], (error, stdout, stderr) => {
-        console.log("attempting to install mkcert thingy magig")
-    })
-}
-
-if (!fs.existsSync(path.join(rootDir, "silly+4-key.pem")) && !fs.existsSync(path.join(rootDir, "silly+4.pem"))) {
-    childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["silly", "localhost", "127.0.0.1", "::1", ipaddress], (error, stdout, stderr) => {
-        console.log("generating certificates")
-    })
-
-}
+const rootDir = __dirname;
+console.log(rootDir)
+// console.log(path.join(rootDir, "bin", "mkcert.exe"))
+// 
+// if (!fs.existsSync(path.join(process.env.LOCALAPPDATA, "mkcert", "rootCA.pem"))) {
+    // childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["-install"], (error, stdout, stderr) => {
+        // console.log("attempting to install mkcert thingy magig")
+    // })
+// }
+// 
+// if (!fs.existsSync(path.join(rootDir, "silly+4-key.pem")) && !fs.existsSync(path.join(rootDir, "silly+4.pem"))) {
+    // childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["silly", "localhost", "127.0.0.1", "::1", ipaddress], (error, stdout, stderr) => {
+        // console.log("generating certificates")
+    // })
+// 
+// }
 // create a certificate authority
 function error(message) {
     const errordesign = {
