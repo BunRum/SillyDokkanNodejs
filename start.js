@@ -10,10 +10,9 @@ const boxen = require("boxen");
 var ipaddress = ip.address()
 var sqlite3 = require('@journeyapps/sqlcipher').verbose();
 var miscfunctions = require("./uifunctions");
-const PORT = 443
+const PORT = 8080
 // console.log(Server.ServerStart/)
 var fulladdress = `https://${ipaddress}:${PORT}`
-var filehost = `https://${ipaddress}:8082`
 const cliProgress = require('cli-progress');
 
 const rootDir = __dirname;
@@ -54,7 +53,6 @@ module.exports = {
     ipaddress: ipaddress,
     port: PORT,
     fulladdress: fulladdress,
-    filehost: filehost,
     rootDir: rootDir
 }
 
