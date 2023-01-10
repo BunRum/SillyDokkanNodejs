@@ -10,28 +10,36 @@ from os import path
 from pathlib import Path
 import glob
 
+
+def getfiles(source):
+    files = []
+    for file in glob.glob(f'{source}/**', recursive=True):
+        truefilename = file.replace('\\', '/')
+        if path.isfile(truefilename):
+            files.append(truefilename)
+    return files
+
+
 def hashes(source, version):
-    hashesjson = []
-    for filename in glob.glob(f'{source}/**', recursive=True):
-        truefilename = filename.replace('\\', '/')
-        if path.isfile(truefilename) and not "ignore" in truefilename:
-            with open(truefilename, 'rb') as file:
-                hasher = xxhash.xxh64()
-                hasher.update(file.read())
-                hex_text = hasher.hexdigest()
-                DirectLink = truefilename.replace("public/", "")
-                file = {
-                    "url": f"./{DirectLink}",
-                    "file_path": truefilename.replace(f"{source}/", ""),
-                    "algorithm": "xxhash",
-                    "size": Path(truefilename).stat().st_size,
-                    "hash": str(int(hex_text, 16))
-                }
-                if not version == None:
-                    file["assetversion"] = version
-                print(json.dumps(file))
-            #    hashesjson.append(file)
-    # print(json.dumps(hashesjson))
+    files = getfiles(source)
+    print(len(files))
+    for filename in files:
+        with open(filename, 'rb') as fileb:
+            hasher = xxhash.xxh64()
+            hasher.update(fileb.read())
+            hex_text = hasher.hexdigest()
+            DirectLink = filename.replace("public/", "")
+            file = {
+                "url": f"./{DirectLink}",
+                "file_path": filename.replace(f"{source}/", ""),
+                "algorithm": "xxhash",
+                "size": Path(filename).stat().st_size,
+                "hash": str(int(hex_text, 16))
+            }
+            if not version == None:
+                file["assetversion"] = version
+            print(json.dumps(file))
+
 
 def unpad(s): return s[:-ord(s[len(s) - 1:])]
 
@@ -41,6 +49,7 @@ BLOCK_SIZE = 16
 
 def pad(s): return s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * chr(BLOCK_SIZE
                                                                 - len(s) % BLOCK_SIZE)
+
 
 def decrypt_sign(data, ver_global: bool = False):
     # print(type(data))
@@ -78,7 +87,8 @@ def decrypt_sign(data, ver_global: bool = False):
             data[SALT_LEN:]), AES.block_size)
     except Exception as e:
         print(e)
-    print( json.dumps(json.loads(dec_data.decode("utf-8"))))
+    print(json.dumps(json.loads(dec_data.decode("utf-8"))))
+
 
 def get_key_and_iv(password, salt, klen=32, ilen=16, msgdgst='md5'):
     mdf = getattr(__import__('hashlib', fromlist=[msgdgst]), msgdgst)
@@ -100,6 +110,7 @@ def get_key_and_iv(password, salt, klen=32, ilen=16, msgdgst='md5'):
     except UnicodeDecodeError:
         return (None, None)
 
+
 def encrypt_sign(data, ver_global: bool = False):
     data = pad(data)
     key1 = str.encode(data)
@@ -114,6 +125,7 @@ def encrypt_sign(data, ver_global: bool = False):
     a = cipher.encrypt(key1)
     a = salt + a
     print(base64.b64encode(a).decode())
+
 
 args = json.loads(sys.argv[1])
 if args["function"] == 'hashes':

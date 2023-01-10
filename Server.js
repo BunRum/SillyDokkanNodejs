@@ -8,6 +8,8 @@ const chalk = require("chalk");
 const boxen = require("boxen");
 const path = require("path");
 var childproc = require("child_process")
+const JSONStream = require('pixl-json-stream');
+var cliProgress = require("cli-progress")
 function parsejson(json) {
     var replacecmds = {
         "./": `${Index.fulladdress}/`,
@@ -171,6 +173,7 @@ var ServerStart = function ServerStart(app) {
     })
 
     app.post("/auth/sign_in", (req, res) => {
+        console.log(req.headers)
         console.log(req.body)
         res.send({
             "access_token": "bun",
@@ -226,7 +229,7 @@ var ServerStart = function ServerStart(app) {
                         stdout = parsejson(stdout)
                         res.send({ "assets0": stdout })
                     }
-                })
+                })  
             } else {
                 successmessage("existing tutorial asset json found")
                 var assets = parsejson(data.toString('utf-8'))
@@ -595,18 +598,30 @@ var ServerStart = function ServerStart(app) {
                             })
 
                             error(`asset json for version ${item} not found, will attempt to create one (depending on the amount of files in the directory it may take long)`)
-                            const JSONStream = require('pixl-json-stream');
-                            const ls = childproc.spawn(path.join(Index.rootDir, "bin", "hash.exe"), [options], { stdio: ['pipe', 'pipe', 'pipe'] })
+                            // const ls = childproc.spawn(path.join(Index.rootDir, "bin", "hash.exe"), [options], { stdio: ['pipe', 'pipe', 'pipe'] })
+                            const ls = childproc.spawn("python", ["hash.py", options], { stdio: ['pipe', 'pipe', 'pipe'] })
                             let stream = new JSONStream(ls.stdout, ls.stdin);
                             var localmaster = []
+                            var bar;
+                            
+                            stream.on("text", (text) => {
+                                if (!bar) {
+                                    bar = new cliProgress.Bar({}, cliProgress.Presets.shades_classic);
+                                    bar.start(Number(text))
+                                }
+                            })  
+
                             stream.on('json', function (data) {
                                 master.push(parsejson(data))
+                                bar.increment()
+                                
                                 localmaster.push(data)
                             });
                             ls.stderr.on("data", (chunk) => {
                                 error(chunk.toString())
                             })
                             ls.stdout.on("close", () => {
+                                bar.stop()
                                 successmessage(`asset json for version ${item} has been created`)
                                 // console.log(master)
                                 fs.writeFileSync(`${Index.rootDir}/public/assets/${item}/assets.json`, JSON.stringify(localmaster, null, 4))

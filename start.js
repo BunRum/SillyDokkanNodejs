@@ -9,21 +9,29 @@ const chokidar = require('chokidar');
 const chalk = require("chalk");
 const boxen = require("boxen");
 var ipaddress = ip.address()
-var miscfunctions = require("./uifunctions")
+var sqlite3 = require('@journeyapps/sqlcipher').verbose();
+var miscfunctions = require("./uifunctions");
 const PORT = 443
 // console.log(Server.ServerStart/)
 var fulladdress = `https://${ipaddress}:${PORT}`
 var filehost = `https://${ipaddress}:8082`
-
-
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
-
-
+const cliProgress = require('cli-progress');
 
 const rootDir = (process.pkg) ? process.cwd() : __dirname;
+console.log(path.join(rootDir, "bin", "mkcert.exe"))
 
+if (!fs.existsSync(path.join(process.env.LOCALAPPDATA, "mkcert", "rootCA.pem"))) {
+    childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["-install"], (error, stdout, stderr) => {
+        console.log("attempting to install mkcert thingy magig")
+    })
+}
 
+if (!fs.existsSync(path.join(rootDir, "silly+4-key.pem")) && !fs.existsSync(path.join(rootDir, "silly+4.pem"))) {
+    childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["silly", "localhost", "127.0.0.1", "::1", ipaddress], (error, stdout, stderr) => {
+        console.log("generating certificates")
+    })
+
+}
 // create a certificate authority
 function error(message) {
     const errordesign = {
@@ -51,22 +59,9 @@ module.exports = {
 }
 
 async function start() {
-    const ca = await mkcert.createCA({
-        organization: ipaddress,
-        countryCode: 'US',
-        state: 'California',
-        locality: 'Kathmandu',
-        validityDays: 365
-    });
-    const cert = await mkcert.createCert({
-        domains: [ipaddress, 'localhost'],
-        validityDays: 365,
-        caKey: ca.key,
-        caCert: ca.cert
-    });
     const creds = {
-        cert: cert.cert,
-        key: cert.key
+        cert: fs.readFileSync(path.join(rootDir, "silly+4.pem")),
+        key: fs.readFileSync(path.join(rootDir, "silly+4-key.pem"))
     }
 
     const app = express();
@@ -89,7 +84,7 @@ async function start() {
 
     // console.log(`Web server started at: ${fulladdress}`);
 
-    app.get("/certs", (req, res) => {
+    app.get("/cert", (req, res) => {
         res.sendFile(path.join(process.env.LOCALAPPDATA, "mkcert", "rootCA.pem"))
     })
 
@@ -133,7 +128,7 @@ const commands = {
             }
         }
     },
-    "watch": function(text) {
+    "watch": function (text) {
         // console.log(text)
         var textarray = text.split(' ')
         if (textarray[1] == "list") {
@@ -163,8 +158,65 @@ const commands = {
                 successmessage(`${pathtofile} has successfully been removed from watch`)
             } else {
                 error("that path does not exist")
-            } 
+            }
         }
+    },
+    "getassets": function () {
+        var assetstore = new sqlite3.Database("assetstore.db", (err) => {
+            if (err) {
+                error(err)
+            } else {
+                https.get("https://bunrumz.com/assets.json", (res) => {
+                    var body = '';
+
+                    res.on('data', (chunk) => {
+                        body += chunk;
+                    });
+
+                    res.on('end', () => {
+                        var json = JSON.parse(body);
+                        console.log(json)
+
+                        Object.keys(json).forEach((value) => {
+                            var versions = Object.keys(json[value]).filter(version => Number(version))
+                            var maxassetversion = Math.max(versions)
+                            console.log(value, maxassetversion)
+
+                            const file = fs.createWriteStream("file.zip");
+                            https.get("https://dl.dropboxusercontent.com/s/0z74kdbrx8azda7/stickman.zip", function (response) {
+
+                                response.pipe(file);
+                                var filesize = Number(response.headers["content-length"]);
+                                console.log(response.headers["content-length"])
+                                const bar1 = new cliProgress.Bar({}, cliProgress.Presets.shades_classic);
+                                bar1.start(filesize, 0)
+                                response.on("data", (data) => {
+                                    // console.log(file.bytesWritten, response.headers["content-length"])
+                                    bar1.update(file.bytesWritten)
+                                })
+
+                                file.on("finish", () => {
+                                    bar1.update(file.bytesWritten)
+                                    bar1.stop()
+                                    successmessage("download complete.")
+                                    file.close();
+                                });
+                            }).on("error", (err) => {
+                                error(err)
+                            })
+
+                            assetstore.run(`insert or replace into downloaded values ("${value}", ${maxassetversion});`)
+                            assetstore.all("select * from downloaded;", (err, rows) => {
+                                console.log(rows)
+                            })
+                        })
+
+                    });
+                }).on("error", (err) => {
+                    error(err)
+                })
+            }
+        })
     }
 }
 
