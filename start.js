@@ -4,7 +4,6 @@ const path = require('path')
 var https = require("https");
 var ip = require('ip')
 var childprocess = require("child_process")
-const mkcert = require('mkcert');
 const chokidar = require('chokidar');
 const chalk = require("chalk");
 const boxen = require("boxen");
