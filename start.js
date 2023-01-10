@@ -16,6 +16,7 @@ var fulladdress = `https://${ipaddress}:${PORT}`
 const cliProgress = require('cli-progress');
 
 const rootDir = __dirname;
+console.log(ipaddress)
 console.log(rootDir)
 // console.log(path.join(rootDir, "bin", "mkcert.exe"))
 // 
