@@ -76,9 +76,9 @@ async function start() {
         next();
     })
 
-    const sslServer = https.createServer(creds, app)
-    sslServer.listen(PORT)
-    // app.listen(8081)
+    // const sslServer = https.createServer(creds, app)
+    // sslServer.listen(PORT)
+    app.listen(PORT)
 
     // console.log(`Web server started at: ${fulladdress}`);
 
