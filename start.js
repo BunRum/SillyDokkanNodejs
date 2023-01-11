@@ -4,34 +4,39 @@ const path = require('path')
 var https = require("https");
 var ip = require('ip')
 var childprocess = require("child_process")
+const mkcert = require('mkcert');
 const chokidar = require('chokidar');
 const chalk = require("chalk");
 const boxen = require("boxen");
 var ipaddress = ip.address()
 var sqlite3 = require('@journeyapps/sqlcipher').verbose();
 var miscfunctions = require("./uifunctions");
-const PORT = 8080
+const PORT = 443
 // console.log(Server.ServerStart/)
 var fulladdress = `https://${ipaddress}:${PORT}`
+var filehost = `https://${ipaddress}:8082`
 const cliProgress = require('cli-progress');
 
-const rootDir = __dirname;
-console.log(ipaddress)
-console.log(rootDir)
-// console.log(path.join(rootDir, "bin", "mkcert.exe"))
-// 
-// if (!fs.existsSync(path.join(process.env.LOCALAPPDATA, "mkcert", "rootCA.pem"))) {
-    // childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["-install"], (error, stdout, stderr) => {
-        // console.log("attempting to install mkcert thingy magig")
-    // })
-// }
-// 
-// if (!fs.existsSync(path.join(rootDir, "silly+4-key.pem")) && !fs.existsSync(path.join(rootDir, "silly+4.pem"))) {
-    // childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["silly", "localhost", "127.0.0.1", "::1", ipaddress], (error, stdout, stderr) => {
-        // console.log("generating certificates")
-    // })
-// 
-// }
+const rootDir = (process.pkg) ? process.cwd() : __dirname;
+console.log(path.join(rootDir, "bin", "mkcert.exe"))
+
+if (!fs.existsSync(path.join(process.env.LOCALAPPDATA, "mkcert", "rootCA.pem"))) {
+    childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["-install"], (error, stdout, stderr) => {
+        console.log("attempting to install mkcert thingy magig")
+    })
+}
+
+if (!fs.existsSync(path.join(rootDir, "silly+4-key.pem")) && !fs.existsSync(path.join(rootDir, "silly+4.pem"))) {
+    childprocess.execFile(path.join(rootDir, "bin", "mkcert.exe"), ["silly", "localhost", "127.0.0.1", "::1", ipaddress], (error, stdout, stderr) => {
+        console.log("generating certificates")
+    })
+
+}
+
+function getFileExtension(filename) {
+    return filename.substring(filename.lastIndexOf('.') + 1, filename.length) || filename;
+}
+
 // create a certificate authority
 function error(message) {
     const errordesign = {
@@ -54,6 +59,7 @@ module.exports = {
     ipaddress: ipaddress,
     port: PORT,
     fulladdress: fulladdress,
+    filehost: filehost,
     rootDir: rootDir
 }
 
@@ -77,9 +83,9 @@ async function start() {
         next();
     })
 
-    // const sslServer = https.createServer(creds, app)
-    // sslServer.listen(PORT)
-    app.listen(PORT)
+    const sslServer = https.createServer(creds, app)
+    sslServer.listen(PORT)
+    // app.listen(8081)
 
     // console.log(`Web server started at: ${fulladdress}`);
 
@@ -137,9 +143,14 @@ const commands = {
             if (fs.existsSync(pathtofile)) {
                 watchlist[pathtofile] = chokidar.watch(pathtofile)
                 watchlist[pathtofile].on("change", (path, stats) => {
-                    if (stats.size == 0) {
-                        miscfunctions.executesql(fs.readFileSync(pathtofile, 'utf-8'))
+                    if (getFileExtension(path) == "sql") {
+                        if (stats.size == 0) {
+                            miscfunctions.executesql(fs.readFileSync(pathtofile, 'utf-8'))
+                        }
+                    } else if (getFileExtension(path) == "db") {
+                        console.log("what")
                     }
+
                 })
                 successmessage(`${pathtofile} has successfully been added to watch`)
             } else {
