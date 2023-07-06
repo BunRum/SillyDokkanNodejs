@@ -3,3 +3,13 @@ node_modules
 build
 dist
 bin/mkcert.exe
+assets
+.env
+assets.json
+info.json
+tutorial.json
+tutorial
+*.db
+*.pem
+*.crt
+*.key
