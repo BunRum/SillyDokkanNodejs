@@ -726,18 +726,30 @@ app.get("//user/mydata", function (req, res) {
     })
 })
 
-app.get("/test", async function (req, res) {
-    const { Storage } = require('@google-cloud/storage');
-    const storage = new Storage({
-        projectId: 'dokkanarise',
-        "keyFilename": 'C:/Users/adamv/AppData/Roaming/gcloud/application_default_credentials.json'
-    });
+app.get("/test", function (req, res) {
+    let clientAssetVersion = 0;
+    // if (req.headers['x-assetversion']) {
+    //     clientAssetVersion = parseInt(req.headers['x-assetversion']);
+    // }
+    console.log("gogogo")
+    miscfunctions.GetFilesTimedCloud(new Date(clientAssetVersion))
+    .then(files => {
+        console.log('Files:', files);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    // const { Storage } = require('@google-cloud/storage');
+    // const storage = new Storage({
+    //     projectId: 'dokkanarise',
+    //     "keyFilename": 'C:/Users/adamv/AppData/Roaming/gcloud/application_default_credentials.json'
+    // });
 
-    const [files] = await storage.bucket("assets.bunrum.com").getFiles();
+    // const [files] = await storage.bucket("assets.bunrum.com").getFiles();
 
-    files.forEach(file => {
-      console.log(file.name);
-    });
+    // files.forEach(file => {
+    //   console.log(file.name);
+    // });
 })
 
 app.get('/resources/:type', (req, res) => {

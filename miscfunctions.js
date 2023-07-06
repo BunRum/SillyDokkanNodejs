@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 var ip = require('ip').address()
+const { Storage } = require('@google-cloud/storage');
 class File {
     constructor(path, relativePath, modTime, isBeforeModTime, isEqualToModTime, creationTime, isBeforeCreationTime, isEqualToCreationTime) {
         this.path = path;
@@ -16,27 +17,54 @@ class File {
 
 function ThroughDirectory(Directory) {
     let Files = [];
-    
+
     const rth = (directory) => {
-      fs.readdirSync(directory).forEach(file => {
-        const absolute = path.join(directory, file);
-        if (fs.statSync(absolute).isDirectory()) {
-          rth(absolute);
-        } else {
-            Files.push(absolute.replace(/\\/g, '/'));
-        }
-      });
+        fs.readdirSync(directory).forEach(file => {
+            const absolute = path.join(directory, file);
+            if (fs.statSync(absolute).isDirectory()) {
+                rth(absolute);
+            } else {
+                Files.push(absolute.replace(/\\/g, '/'));
+            }
+        });
     };
-    
+
     rth(Directory);
     return Files;
-  }
-  
+}
+
 
 module.exports = {
+    GetFilesTimedCloud: async function (referenceTime) {
+        const storage = new Storage({
+            "projectId": 'dokkanarise',
+            "keyFilename": 'C:/Users/adamv/AppData/Roaming/gcloud/application_default_credentials.json'
+        });
+        const bucket = storage.bucket("assets.bunrum.com");
+        const files = [];
+
+        try {
+            const [fileList] = await bucket.getFiles();
+            // Use list instead of getMetadata for faster retrieval
+            const [metadataList] = await Promise.all(fileList.map(file => file.getMetadata()));
+            for (let i = 0; i < fileList.length; i++) {
+                const metadata = metadataList[i];
+                const modTime = metadata.updated;
+                const createTime = metadata.timeCreated;
+
+                if (modTime > referenceTime || createTime > referenceTime) {
+                    files.push(fileList[i].name);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return files;
+    },
     GetFilesTimed: function (referenceTime, dir) {
         const files = [];
-//        let assetPath = "./assets"
+        //        let assetPath = "./assets"
         if (!fs.existsSync(dir)) {
             try {
                 fs.mkdirSync(dir, { recursive: true });
@@ -50,7 +78,7 @@ module.exports = {
                 const fileStat = fs.statSync(dirent);
                 const modTime = fileStat.mtime.getTime();
                 const createTime = fileStat.birthtime.getTime();
-//                console.log(modTime > referenceTime, createTime > referenceTime)
+                //                console.log(modTime > referenceTime, createTime > referenceTime)
                 if (modTime > referenceTime || createTime > referenceTime) {
                     files.push(dirent);
                 }
