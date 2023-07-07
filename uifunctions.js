@@ -1,32 +1,13 @@
 var fs = require("fs")
 const path = require('path')
-var sqlite3 = require('@journeyapps/sqlcipher').verbose();
-const cliProgress = require('cli-progress');
-const chalk = require("chalk");
-const boxen = require("boxen");
+// var sqlite3 = require('@journeyapps/sqlcipher').verbose();
 
-function error(message) {
-    const errordesign = {
-        padding: '0.5',
-        margin: 0,
-        backgroundColor: "#000000"
-    };
-    var errormessage = chalk.red.bold(message);
-    console.log(boxen(errormessage, errordesign));
-}
-function successmessage(message) {
-    console.log(boxen(chalk.green.bold(message), {
-        padding: '0.5',
-        margin: 0,
-        backgroundColor: "#000000"
-    }));
-}
 
-var db = new sqlite3.Database('public/database.db', (err) => {
-    if (err) {
-        error(`database does not exist in "public" folder`)
-    }
-});
+// var db = new sqlite3.Database('public/database.db', (err) => {
+//     if (err) {
+//         error(`database does not exist in "public" folder`)
+//     }
+// });
 
 var Gencards = function GenCards() {
     db.run("PRAGMA key='9bf9c6ed9d537c399a6c4513e92ab24717e1a488381e3338593abd923fc8a13b'")

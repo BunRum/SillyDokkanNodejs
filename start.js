@@ -9,14 +9,15 @@ const { parsejson } = require("./miscfunctions");
 const dbfunctions = require("./uifunctions")
 const uuid = require('uuid');
 require("dotenv").config()
-const https = require("https")
-var sqlite3 = require('@journeyapps/sqlcipher').verbose();
-var datadb = new sqlite3.Database('data.db', (err) => {
-    // console.log(err);
-    if (err) {
-        error(`database does not exist in "public" folder`)
-    }
-});
+const https = require("https");
+const { Storage } = require("@google-cloud/storage");
+// var sqlite3 = require('@journeyapps/sqlcipher').verbose();
+// var datadb = new sqlite3.Database('data.db', (err) => {
+//     // console.log(err);
+//     if (err) {
+//         error(`database does not exist in "public" folder`)
+//     }
+// });
 // const port = 3000
 // const rootDir = (process.pkg) ? process.cwd() : __dirname;
 const app = express();
@@ -92,7 +93,7 @@ var userjson = {
 }
 
 app.get("/", function (req, res) {
-    res.send("<h1>HIIIIII IM AVAA</h1>")
+    res.send("<h1>HIIIIII IM 134</h1>")
 })
 
 app.get("/ping", function (req, res) {
@@ -726,30 +727,17 @@ app.get("//user/mydata", function (req, res) {
     })
 })
 
-app.get("/test", function (req, res) {
-    let clientAssetVersion = 0;
-    // if (req.headers['x-assetversion']) {
-    //     clientAssetVersion = parseInt(req.headers['x-assetversion']);
-    // }
-    console.log("gogogo")
-    miscfunctions.GetFilesTimedCloud(new Date(clientAssetVersion))
-    .then(files => {
-        console.log('Files:', files);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-    // const { Storage } = require('@google-cloud/storage');
-    // const storage = new Storage({
-    //     projectId: 'dokkanarise',
-    //     "keyFilename": 'C:/Users/adamv/AppData/Roaming/gcloud/application_default_credentials.json'
-    // });
-
-    // const [files] = await storage.bucket("assets.bunrum.com").getFiles();
-
-    // files.forEach(file => {
-    //   console.log(file.name);
-    // });
+app.get("/test", async function (req, res) {
+    const storage = new Storage()
+    const bucket = storage.bucket(process.env.INFO_STORAGE_BUCKET)
+    const assetsjson = bucket.file("assets.json")
+    try {
+        const [content] = await assetsjson.download();
+        console.log('File content:', content.toString());
+        res.json(parsejson(content.toString()))
+    } catch (error) {
+        console.error('Error reading file:', error);
+    }
 })
 
 app.get('/resources/:type', (req, res) => {

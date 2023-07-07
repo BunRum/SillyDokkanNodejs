@@ -11,6 +11,7 @@
     "build": "pkg package.json -o build/SillyDokkan.exe && npx mkdirp build/bin && robocopy bin build/bin && copy proxy.exe build && npx mkdirp build/public && robocopy local build/local /E && npx mkdirp build/public/assets && npx mkdirp build/public/tutorial"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.11.0",
     "@journeyapps/sqlcipher": "^5.3.1",
     "dayjs": "^1.11.7",
     "dotenv": "^16.3.1",
