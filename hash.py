@@ -2,7 +2,6 @@ from Crypto.Cipher import AES
 from Crypto.Hash import MD5
 from Crypto.Util import Padding
 import base64
-import os
 import json
 import sys
 import xxhash
@@ -33,7 +32,7 @@ def hashes(source, version):
                 "url": f"./{DirectLink}",
                 "file_path": filename.replace(f"{source}/", ""),
                 "algorithm": "xxhash",
-                "size": Path(filename).stat().st_size,
+                "size": Path(filepath).stat().st_size,
                 "hash": str(int(hex_text, 16))
             }
             if not version == None:

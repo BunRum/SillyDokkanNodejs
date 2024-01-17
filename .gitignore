@@ -5,9 +5,9 @@ dist
 bin/mkcert.exe
 assets
 .env
-assets.json
+local/assets.json
 info.json
-tutorial.json
+local/tutorial.json
 tutorial
 *.db
 *.pem

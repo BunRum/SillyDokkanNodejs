@@ -9,9 +9,7 @@ const { parsejson } = require("./miscfunctions");
 const dbfunctions = require("./uifunctions")
 const uuid = require('uuid');
 require("dotenv").config()
-const https = require("https");
-const { Storage } = require("@google-cloud/storage");
-// var sqlite3 = require('@journeyapps/sqlcipher').verbose();
+var sqlite3 = require('@journeyapps/sqlcipher').verbose();
 // var datadb = new sqlite3.Database('data.db', (err) => {
 //     // console.log(err);
 //     if (err) {
@@ -22,15 +20,15 @@ const { Storage } = require("@google-cloud/storage");
 // const rootDir = (process.pkg) ? process.cwd() : __dirname;
 const app = express();
 
-console.log(process.env.DEBUG)
-if (process.env.DEBUG == "true") {
-    https.createServer({
-        key: fs.readFileSync("server.key"),
-        cert: fs.readFileSync("server.crt"),
-    }, app).listen(process.env.DEBUG_PORT, () => {
-        console.log(`server is runing at port ${process.env.DEBUG_PORT}`)
-    });
-}
+// console.log(process.env.DEBUG)
+// if (process.env.DEBUG === "true") {
+//     https.createServer({
+//         key: fs.readFileSync("localhost+1-key.pem"),
+//         cert: fs.readFileSync("localhost+1.pem"),
+//     }, app).listen(process.env.DEBUG_PORT, () => {
+//         console.log(`server is runing at port ${process.env.DEBUG_PORT}`)
+//     });
+// }
 app.listen(process.env.PORT)
 
 app.use(express.text())
@@ -44,11 +42,16 @@ app.use(function (req, res, next) {
     console.log(`${req.method} - ${req.url} `)
     console.log(req.body)
 
+    console.log(req.headers)
+
     // console.log(res.headers["connect-src"])
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
+
+var compression = require('compression');
+app.use(compression());
 
 var userjson = {
     "id": 0,
@@ -93,7 +96,7 @@ var userjson = {
 }
 
 app.get("/", function (req, res) {
-    res.send("<h1>HIIIIII IM 134</h1>")
+    res.send("<h1>Hello there.</h1>")
 })
 
 app.get("/ping", function (req, res) {
@@ -148,7 +151,7 @@ app.put("/auth/link_codes/:code", function (req, res) {
 
 app.post("/captcha/inquiry", function (req, res) {
     res.send({
-        "inquiry": 147336251
+        "inquiry": 147336251    
     })
 })
 
@@ -179,17 +182,15 @@ app.post("/auth/sign_in", function (req, res) {
 })
 
 app.get("/user", function (req, res) {
-    var currentdate = dayjs().unix()
     // console.log(currentdate)
-    userjson.processed_at = currentdate
+    userjson.processed_at = dayjs().unix()
     // var unixcurrentdate = dayjs()
     res.send({ "user": userjson })
 });
 
 app.put("/user", function (req, res) {
-    var currentdate = dayjs().unix()
     // console.log(currentdate)
-    userjson.processed_at = currentdate
+    userjson.processed_at = dayjs().unix()
     // var unixcurrentdate = dayjs()
     res.send({ "user": userjson })
 })
@@ -208,49 +209,50 @@ app.get("/user/succeeds", function (req, res) {
 })
 
 app.get("/tutorial/assets", function (req, res) {
+    // res.json({ "assets0": [] })
+    res.json({"assets0": parsejson("tutorial.json")})
+    // const start = Date.now();
 
-    const start = Date.now();
+    // let clientAssetVersion = 0;
+    // if (req.headers['x-assetversion']) {
+    //     clientAssetVersion = parseInt(req.headers['x-assetversion']) * 1000;
+    // }
+    // console.log(clientAssetVersion, start)
 
-    let clientAssetVersion = 0;
-    if (req.headers['x-assetversion']) {
-        clientAssetVersion = parseInt(req.headers['x-assetversion']) * 1000;
-    }
-    console.log(clientAssetVersion, start)
+    // let tutorialtime = miscfunctions.parsejson("info.json")["tutorial"]
+    // console.log(tutorialtime)
+    // const timeAssets = miscfunctions.GetFilesTimed(new Date(tutorialtime), "./tutorial");
+    // console.log(timeAssets.length)
+    // if (timeAssets.length === 0) {
+    //     res.json({ "assets0": miscfunctions.parsejson("tutorial.json") })
+    // } else {
+    //     const options = JSON.stringify({
+    //         "function": 'hashes',
+    //         "source": `./tutorial`
+    //     })
 
-    let tutorialtime = miscfunctions.parsejson("info.json")["tutorial"]
-    console.log(tutorialtime)
-    const timeAssets = miscfunctions.GetFilesTimed(new Date(tutorialtime), "./tutorial");
-    console.log(timeAssets.length)
-    if (timeAssets.length === 0) {
-        res.json({ "assets0": miscfunctions.parsejson("tutorial.json") })
-    } else {
-        const options = JSON.stringify({
-            "function": 'hashes',
-            "source": `./tutorial`
-        })
+    //     const ls = childprocess.spawn(path.join("dist", "hash", "hash.exe"), [options], { stdio: ['pipe', 'pipe', 'pipe'] })
+    //     let stream = new JSONStream(ls.stdout, ls.stdin);
+    //     var localmaster = []
 
-        const ls = childprocess.spawn(path.join("dist", "hash", "hash.exe"), [options], { stdio: ['pipe', 'pipe', 'pipe'] })
-        let stream = new JSONStream(ls.stdout, ls.stdin);
-        var localmaster = []
+    //     stream.on("text", (text) => {
+    //         //            console.log(text)
+    //     })
 
-        stream.on("text", (text) => {
-            //            console.log(text)
-        })
+    //     stream.on('json', function (data) {
+    //         //            console.log(data)
+    //         localmaster.push(data)
+    //     });
 
-        stream.on('json', function (data) {
-            //            console.log(data)
-            localmaster.push(data)
-        });
-
-        ls.stdout.on("close", () => {
-            console.log("process closed")
-            fs.writeFileSync(`tutorial.json`, JSON.stringify(localmaster, null, 4))
-            res.json({ "assets0": parsejson(localmaster) })
-            let infojson = miscfunctions.parsejson("info.json")
-            infojson["tutorial"] = Date.now()
-            fs.writeFileSync("info.json", JSON.stringify(infojson, null, 4))
-        })
-    }
+    //     ls.stdout.on("close", () => {
+    //         console.log("process closed")
+    //         fs.writeFileSync(`tutorial.json`, JSON.stringify(localmaster, null, 4))
+    //         res.json({ "assets0": parsejson(localmaster) })
+    //         let infojson = miscfunctions.parsejson("info.json")
+    //         infojson["tutorial"] = Date.now()
+    //         fs.writeFileSync("info.json", JSON.stringify(infojson, null, 4))
+    //     })
+    // }
 })
 
 app.get("/gashas", function (req, res) {
@@ -551,17 +553,13 @@ app.post("/ondemand_assets", function (req, res) {
 })
 
 app.get("/client_assets/database", function (req, res) {
-    var localserverversions = getlocalServerVersions()
-    getServerVersions().then((serverversions) => {
-        console.log(serverversions)
-        var vers = `{ "local": ${localserverversions["database"]}, "server": ${serverversions["database"]} }`
-        res.send({
-            "url": `${fulladdress}/database.db`,
-            "file_path": "sqlite/current/en/database.db",
-            "algorithm": "version",
-            "hash": vers,
-            "version": vers
-        })
+    const dbversion = parsejson("info.json")["database"]
+    res.send({
+        "url": `${process.env.STORAGE_BUCKET_URL}/sqlite/current/en/database.db`,
+        "file_path": "sqlite/current/en/database.db",
+        "algorithm": "version",
+        "hash": dbversion,
+        "version": dbversion
     })
 
 })
@@ -577,55 +575,28 @@ app.get("/cards", function (req, res) {
         "cards": loginjson["cards"],
         "user_card_id_updates": loginjson["user_card_id_updates"]
     })
+    // res.send({"cards": [], "usercard"})
 })
-
-function range(start, end) {
-    return Array(end - start + 1).fill().map((_, idx) => start + idx)
-}
 app.get('/client_assets', (req, res) => {
-    const start = Date.now();
-
-    //    let clientAssetVersion = 0;
-    //    if (req.headers['x-assetversion']) {
-    //        clientAssetVersion = parseInt(req.headers['x-assetversion']);
-    //    }
-    //    console.log(clientAssetVersion, start)
-
-    let tutorialtime = miscfunctions.parsejson("info.json")["client_assets"]
-    console.log(tutorialtime)
-    const timeAssets = miscfunctions.GetFilesTimed(new Date(tutorialtime), "./assets");
-    console.log(timeAssets.length)
-    if (timeAssets.length === 0) {
-        res.json({ "assets": miscfunctions.parsejson("assets.json"), "latest_version": start })
-    } else {
-        const options = JSON.stringify({
-            "function": 'hashes',
-            "source": `./assets`
-        })
-
-        const ls = childprocess.spawn(path.join("dist", "hash", "hash.exe"), [options], { stdio: ['pipe', 'pipe', 'pipe'] })
-        let stream = new JSONStream(ls.stdout, ls.stdin);
-        var localmaster = []
-
-        stream.on("text", (text) => {
-            //            console.log(text)
-        })
-
-        stream.on('json', function (data) {
-            //            console.log(data)
-            localmaster.push(data)
-        });
-
-        ls.stdout.on("close", () => {
-            console.log("process closed")
-            fs.writeFileSync(`assets.json`, JSON.stringify(localmaster, null, 4))
-            res.json({ "assets": parsejson(localmaster), "latest_version": start })
-            let infojson = miscfunctions.parsejson("info.json")
-            infojson["client_assets"] = start
-            fs.writeFileSync("info.json", JSON.stringify(infojson, null, 4))
-        })
-    }
-
+    // const storage = new Storage()
+    // const bucket = storage.bucket(process.env.STORAGE_BUCKET)
+    // const filesStream = bucket.getFilesStream();
+    // const files = []
+    // console.log("red")
+    // filesStream
+    //     .on('data', (file) => {
+    //         files.push(file.metadata)
+    //     })
+    //     .on('error', (err) => {
+    //         console.error('Error occurred:', err);
+    //     })
+    //     .on('end', () => {
+    //         console.log('File listing completed.');
+    //         let result = files.map(a => a["metadata"]);
+    //         res.send({ "assets": parsejson(result), "latest_version": Date.now() })
+    //     });
+    const assetsjson = miscfunctions.parsejson("assets.json")
+    res.send({ "assets": assetsjson, "latest_version": Date.now() })
 });
 
 
@@ -726,78 +697,65 @@ app.get("//user/mydata", function (req, res) {
         ]
     })
 })
-
 app.get("/test", async function (req, res) {
-    const storage = new Storage()
-    const bucket = storage.bucket(process.env.INFO_STORAGE_BUCKET)
-    const assetsjson = bucket.file("assets.json")
-    try {
-        const [content] = await assetsjson.download();
-        console.log('File content:', content.toString());
-        res.json(parsejson(content.toString()))
-    } catch (error) {
-        console.error('Error reading file:', error);
-    }
+    let infojson = miscfunctions.parsejson("info.json")
+    miscfunctions.GetFilesTimedCloud(new Date(infojson["client_assets"])).then((files) => {
+        infojson["client_assets"] = Date.now()
+        fs.writeFileSync("info.json", JSON.stringify(infojson, null, 4))
+        res.send(files)
+    })
+
 })
 
 app.get('/resources/:type', (req, res) => {
     const ResourceType = req.params.type || 'login';
-    // console.log(req.headers['x-assetversion'])
     let clientAssetVersion = 0;
+    let clientDbVersion = 0;
+
     if (req.headers['x-assetversion']) {
         clientAssetVersion = parseInt(req.headers['x-assetversion']);
     }
+    if (req.headers['x-databaseversion']) {
+        clientDbVersion = parseInt(req.headers['x-databaseversion']);
+    }
 
-    // console.log(clientAssetVersion);
-    //    console.log(Date.now())
-
-    console.log(ResourceType);
-    // console.log(req.query, req.query["force"])
     switch (ResourceType) {
         case 'login':
+            let infojson = parsejson("info.json");
 
-            const idPattern = /id="([^"]+)"/;
-            const matches = req.headers["authorization"].match(idPattern);
-            const id = matches && matches[1];
-            console.log(id)
-            // console.log(req.headers)
-            let infojson = parsejson("info.json")
-            var assets = miscfunctions.GetFilesTimed(new Date(infojson["client_assets"]), "./assets");
-            var debug = true
-            if (clientAssetVersion < infojson["client_assets"] || assets.length !== 0) {
-                res.statusCode = 400
-                res.json({ error: { code: 'client_assets/new_version_exists' } });
-                assets = null;
-                infojson = null;
-            } else {
-                assets = null;
-                infojson = null;
-
-                dbfunctions.refresh().then(() => {
-                    // console.log("sending login json")
-                    // const readStream = fs.createReadStream('local/resources/login.json');
-                    // readStream.pipe(res);
-                    res.json(miscfunctions.parsejson("local/resources/login.json"))
-                    console.log("sent loginjson")
-                })
+            if (clientDbVersion !== infojson["database"]) {
+                res.statusCode = 400;
+                res.json({ error: { code: "client_database/new_version_exists" } });
+                break;
             }
-            break; // Add break statement to exit the switch block
+
+            if (clientAssetVersion !== infojson["client_assets"]) {
+                var assets = miscfunctions.GetFilesTimed(new Date(infojson["client_assets"]), "./assets");
+                if (clientAssetVersion < infojson["client_assets"] || assets.length !== 0) {
+                    res.statusCode = 400;
+                    res.json({ error: { code: 'client_assets/new_version_exists' } });
+                }
+                break;
+            }
+            res.json({})
+            // res.json(miscfunctions.parsejson("local/resources/login.json"));
+            // res.json(miscfunctions.parsejson("local/resources/login.json"));
+            break;
 
         case 'home':
-            // const homeJSON = JSON.parse(fs.readFileSync('local/resources/home.json'));
             res.json(miscfunctions.parsejson("local/resources/home.json"));
-            break; // Add break statement to exit the switch block
+            break;
 
         default:
             res.send();
-            break; // Add break statement to exit the switch block
+            break;
     }
 });
 
 
 app.get("/shops/:type/items", function (req, res) {
     var type = req.params["type"]
-    if (type == "treasure") {
+    if (type === "treasure") {
         res.send({
             "error": "not available yet"
         })
@@ -861,7 +819,7 @@ app.put("/advertisement/id", function (req, res) {
 
 app.get("/announcements", function (req, res) {
     console.log("single")
-    if (req.query["display"] == "home") {
+    if (req.query["display"] === "home") {
         res.send(miscfunctions.parsejson(`local/announcements.json`))
     }
 })
@@ -869,7 +827,7 @@ app.get("/announcements", function (req, res) {
 app.get("/announcements/:route", function (req, res) {
     var pathez = req.params.route
 
-    if (pathez == "notify") {
+    if (pathez === "notify") {
         res.send({
             "announcement_is_new": true
         })
@@ -948,26 +906,28 @@ app.post("/teams", function (req, res) {
 })
 
 app.get("/user_areas", function (req, res) {
-    var eventsjson = miscfunctions.parsejson(`local/events.json`)
+    var eventsjson = miscfunctions.parsejson("local/events.json");
     var user_areas = {
         "user_areas": [],
         "user_z_battles": []
-    }
+    };
     var db = new sqlite3.Database('database.db', (err) => {
         if (err) {
-            error(`database does not exist in "public" folder`)
+            error("database does not exist in 'public' folder");
         } else {
-            db.run("PRAGMA key='9bf9c6ed9d537c399a6c4513e92ab24717e1a488381e3338593abd923fc8a13b'")
-            db.run("PRAGMA cipher_compatibility = 3")
+            db.run("PRAGMA key='9bf9c6ed9d537c399a6c4513e92ab24717e1a488381e3338593abd923fc8a13b'");
+            db.run("PRAGMA cipher_compatibility = 3");
 
             var quests = new Promise((resolve) => {
-                db.all("select sugoroku_maps.id as sugoroku_map_id, sugoroku_maps.difficulty as difficulty, quests.id as questid, areas.id as areaid from quests join areas on quests.area_id == areas.id join sugoroku_maps on quests.id == sugoroku_maps.quest_id", (err, rows) => {
-                    resolve(rows)
-                })
-            })
+                db.all("select sugoroku_maps.id as sugoroku_map_id, sugoroku_maps.difficulty as difficulty, quests.id as questid, areas.id as areaid from quests join areas on quests.area_id = areas.id join sugoroku_maps on quests.id = sugoroku_maps.quest_id", (err, rows) => {
+                    resolve(rows);
+                });
+            });
+
             quests.then((rows) => {
                 eventsjson["events"].forEach((ev, index, array) => {
-                    var sugorokus = rows.filter(dict => dict["areaid"] == ev["id"])
+                    console.log(rows);
+                    var sugorokus = rows.filter(dict => dict["areaid"] === ev["id"]);
                     var currentarea = {
                         "area_id": ev["id"],
                         "is_cleared_normal": true,
@@ -977,27 +937,27 @@ app.get("/user_areas", function (req, res) {
                         "is_cleared_super_hard2": true,
                         "is_cleared_super_hard3": true,
                         "user_sugoroku_maps": []
-                    }
+                    };
                     sugorokus.forEach((dict) => {
                         currentarea.user_sugoroku_maps.push({
                             "sugoroku_map_id": dict["sugoroku_map_id"],
                             "visited_count": 1,
                             "cleared_count": 1,
                             "challenge_label": null
-                        })
-                    })
-                    user_areas.user_areas.push(currentarea)
-                    if (index == array.length - 1) {
-                        res.send(user_areas)
+                        });
+                    });
+                    user_areas.user_areas.push(currentarea);
+                    if (index === array.length - 1) {
+                        res.send(user_areas);
                     }
-                })
-            })
-            db.close()
+                });
+            });
+
+            db.close();
         }
     });
+});
 
-    // res.send(miscfunctions.parsejson(`local/user_areas.json`))
-})
 
 app.get("/events", function (req, res) {
     res.send(miscfunctions.parsejson(`local/events.json`))
@@ -1010,7 +970,7 @@ app.get("/quests/:eventid/briefing", function (req, res) {
     console.log(`selected team: ${req.query["team_num"]}`)
 
     if (login["teams"]["user_card_teams"][Number(req.query["team_num"]) - 1]["user_card_ids"][0]) { // if team leader exists
-        var teamleader = login["cards"].filter((Card) => Card["card_id"] == login["teams"]["user_card_teams"][Number(req.query["team_num"]) - 1]["user_card_ids"][0])[0]
+        var teamleader = login["cards"].filter((Card) => Card["card_id"] === login["teams"]["user_card_teams"][Number(req.query["team_num"]) - 1]["user_card_ids"][0])[0]
         console.log(teamleader)
         res.send({
             "supporters": [],
@@ -1152,14 +1112,15 @@ app.post("/quests/:eventid/sugoroku_maps/finish", function (req, res) {
 app.get("/user_cards/:cardid/potentials", function (req, res) {
     var cardid = req.params["cardid"];
     if (fs.existsSync(`local/user_cards/${cardid}/potentials.json`)) {
+        console.log("that exists")
         res.send(JSON.parse(fs.readFileSync(`local/user_cards/${cardid}/potentials.json`)));
     } else {
         master = { "user_card_potential_squares": [] };
-        var loginjson = JSON.parse(fs.readFileSync(`local/resources/login.json`));
-        var cardjson = loginjson["cards"].filter(row => row["card_id"] == cardid)[0];
+        var loginjson = parsejson("local/resources/login.json");
+        var cardjson = loginjson["cards"].filter(row => row["card_id"] === cardid)[0];
 
         if (cardjson) {
-            var db = new sqlite3.Database('public/database.db', function (err) {
+            var db = new sqlite3.Database('database.db', function (err) {
                 if (err) {
                     error(`database does not exist in "public" folder`);
                 } else {
@@ -1176,11 +1137,11 @@ app.get("/user_cards/:cardid/potentials", function (req, res) {
                             return;
                         }
 
-                        var potential_routes_ids = rows.filter(row => row["potential_board_id"] == cardjson["potential_board_id"] && row["route"] != null)
+                        var potential_routes_ids = rows.filter(row => row["potential_board_id"] === cardjson["potential_board_id"] && row["route"] != null)
                             .map(dict => dict["potential_squares_id"]);
 
-                        potential_routes_ids.forEach(function (value, index) {
-                            if (!master["user_card_potential_squares"].find(r => r["potential_square_id"] == value)) {
+                        potential_routes_ids.forEach(function (value) {
+                            if (!master["user_card_potential_squares"].find(r => r["potential_square_id"] === value)) {
                                 master["user_card_potential_squares"].push({
                                     "potential_square_id": value,
                                     "status": 1,
@@ -1188,8 +1149,8 @@ app.get("/user_cards/:cardid/potentials", function (req, res) {
                                 });
                             }
                         });
-
-                        outputFileSync(`local/user_cards/${cardid}/potentials.json`, JSON.stringify(master, null, 4));
+                        console.log("amek that file")
+                        miscfunctions.WriteFileSyncRecursive(`local/user_cards/${cardid}/potentials.json`, JSON.stringify(master, null, 4));
                         res.send(master);
                     });
                 }
@@ -1215,9 +1176,9 @@ app.post("/user_cards/:cardid/potentials/release", function (req, res) {
         "user_potential_items": [],
         "missions": []
     }
-    var cardjson = loginjson["cards"].filter(row => row["card_id"] == cardid)[0]
+    var cardjson = loginjson["cards"].filter(row => row["card_id"] === cardid)[0]
 
-    var db = new sqlite3.Database('public/database.db', async function (err) {
+    var db = new sqlite3.Database('database.db', async function (err) {
         if (err) {
             error(`database does not exist in "public" folder`)
         } else {
@@ -1238,7 +1199,7 @@ app.post("/user_cards/:cardid/potentials/release", function (req, res) {
             })
             // console.log(potential_selections);
 
-            const db_potential_squares = await new Promise(function (Resolve, Reject) {
+            const db_potential_squares = await new Promise(function (Resolve) {
                 db.all(`select potential_squares.id as potential_squares_id, potential_squares.route,potential_events.id as potential_events_id, potential_events.type, potential_events.currency_id, potential_events.additional_value, potential_squares.potential_board_id,potential_boards.comment
                     from potential_squares
                     join potential_events on potential_squares.event_id = potential_events.id
@@ -1247,7 +1208,7 @@ app.post("/user_cards/:cardid/potentials/release", function (req, res) {
                 })
             })
 
-            var potential_routes_ids = db_potential_squares.filter(row => row["potential_board_id"] == cardjson["potential_board_id"] && row["route"] != null).map(dict => dict["potential_squares_id"])
+            var potential_routes_ids = db_potential_squares.filter(row => row["potential_board_id"] === cardjson["potential_board_id"] && row["route"] != null).map(dict => dict["potential_squares_id"])
 
             for (let index = 0; index < potential_squares.length; index++) {
                 const potential_square_id = potential_squares[index]["potential_square_id"];
@@ -1257,16 +1218,16 @@ app.post("/user_cards/:cardid/potentials/release", function (req, res) {
                 }
                 var potentialrow
                 if (event_selection_id) {
-                    var row = potential_selections.find(dict => dict["id"] == event_selection_id)
+                    var row = potential_selections.find(dict => dict["id"] === event_selection_id)
                     row["potential_squares_id"] = potential_square_id
                     console.log(row)
                     potentialrow = row
                 } else {
-                    potentialrow = db_potential_squares.filter(dict => dict["potential_squares_id"] == potential_square_id)[0]
+                    potentialrow = db_potential_squares.filter(dict => dict["potential_squares_id"] === potential_square_id)[0]
                 }
                 var type = potentialrow["type"].substring(potentialrow["type"].lastIndexOf(":") + 1)
 
-                var ExistingPotentialSquare = master["user_card_potential_squares"].find(row => row["potential_square_id"] == potential_square_id)
+                var ExistingPotentialSquare = master["user_card_potential_squares"].find(row => row["potential_square_id"] === potential_square_id)
                 if (!ExistingPotentialSquare) {
                     master["user_card_potential_squares"].push({
                         "potential_square_id": potential_square_id,
@@ -1276,7 +1237,7 @@ app.post("/user_cards/:cardid/potentials/release", function (req, res) {
                 } else {
                     ExistingPotentialSquare["status"] = 0
                 }
-                var ExistingPotentialParameter = cardjson["potential_parameters"].find(dict => dict["parameter_type"] == type && dict["parameter_id"] == potentialrow["currency_id"])
+                var ExistingPotentialParameter = cardjson["potential_parameters"].find(dict => dict["parameter_type"] === type && dict["parameter_id"] === potentialrow["currency_id"])
                 if (ExistingPotentialParameter) {
                     ExistingPotentialParameter["total_value"] = ExistingPotentialParameter["total_value"] + potentialrow["additional_value"]
                 } else {
@@ -1289,13 +1250,13 @@ app.post("/user_cards/:cardid/potentials/release", function (req, res) {
                     // console.log(cardjson["potential_parameters"]);
                 }
                 // }
-                if (index == potential_squares.length - 1) {
+                if (index === potential_squares.length - 1) {
                     master["card"] = cardjson
                     master["user_card_potential_parameters"] = cardjson["potential_parameters"]
                     res.send(master)
                     fs.writeFileSync(`local/resources/login.json`, JSON.stringify(loginjson, null, 4))
-                    outputFileSync(`local/user_cards/${cardid}/potentials/release.json`, JSON.stringify(master, null, 4))
-                    outputFileSync(`local/user_cards/${cardid}/potentials.json`, JSON.stringify({
+                    fs.writeFileSync(`local/user_cards/${cardid}/potentials/release.json`, JSON.stringify(master, null, 4))
+                    fs.writeFileSync(`local/user_cards/${cardid}/potentials.json`, JSON.stringify({
                         "user_card_potential_squares": master["user_card_potential_squares"]
                     }, null, 4))
                 }
@@ -1449,7 +1410,7 @@ app.post("/cards/:cardid/equip", function (req, res) {
 
 app.all("*", function (req, res) {
     console.log(`${req.method} ${req.path} does not exist`)
-    if (req.method == "POST") {
+    if (req.method === "POST") {
         console.log(req.body)
     }
     res.send({})
